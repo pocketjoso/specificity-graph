@@ -1,7 +1,8 @@
 # Specificity Graph (for CSS)
 Idea by [Harry Roberts](http://csswizardry.com/2014/10/the-specificity-graph/)
 
-Plot your css specificity on a graph. Uses d3, css-parser, and specificity.
+![The generated graph](https://raw.githubusercontent.com/pocketjoso/specificity-graph/master/img/example-graph.png)
+Generate a graph depicting the specificity in your stylesheet. Uses d3, css-parser, and specificity.
 
 Online demo (coming soon)
 
