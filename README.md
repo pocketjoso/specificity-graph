@@ -1,4 +1,6 @@
 # Specificity Graph (for CSS)
+[![NPM version](https://badge.fury.io/js/specificity-graph.svg)](http://badge.fury.io/js/specificity-graph)
+
 Idea by [Harry Roberts](http://csswizardry.com/2014/10/the-specificity-graph/)
 
 ![The generated graph](https://raw.githubusercontent.com/pocketjoso/specificity-graph/master/img/example-graph.png)
@@ -7,7 +9,7 @@ Generate an interactive line graph showing the specificity in your stylesheet. U
 Online generator (coming soon)
 
 ## Installation
-(will add as `npm package` soon)
+`npm install specificity-graph`
 
 To get the example `index.html` up and running:  
 1. Clone repo  
@@ -23,4 +25,5 @@ First require `./lib/core`.
 
 
 ## Changelog
+0.0.1 Npm package  
 0.0.0 Initial version  

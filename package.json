@@ -1,18 +1,34 @@
 {
-  "name": "cssspecificitygraph",
-  "version": "0.0.0",
-  "description": "Generates a CSS Specificity Graph for your CSS.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "specificity-graph",
+  "description": "Generate an interactive Specificity Graph for your CSS.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/pocketjoso/specificity-graph",
+  "author": {
+    "name": "Jonas Ohlsson",
+    "email": "jonas.sebastian.ohlsson@gmail.com",
+    "url": "http://jonassebastianohlsson.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pocketjoso/specificity-graph.git#master"
+  },
+  "bugs": {
+    "url": "https://github.com/pocketjoso/specificity-graph/issues"
+  },
+  "license": [
+    {
+      "type": "MIT",
+      "url": "github.com/pocketjoso/specificity-graph/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": "./lib/core.js",
+
   "keywords": [
     "CSS",
     "css",
     "specificity",
     "graph"
   ],
-  "author": "Jonas Ohlsson",
   "license": "MIT",
   "dependencies": {
     "css-parse": "^2.0.0",
@@ -24,6 +40,7 @@
     "browserify": "^6.2.0"
   },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "example": "browserify example.js -o dist/bundle.js && open index.html"
   }
 }
