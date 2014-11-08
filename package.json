@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "browserify": "^6.2.0"
+  },
+  "scripts": {
+    "example": "browserify example.js -o dist/bundle.js && open index.html"
   }
 }
