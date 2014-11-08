@@ -2,6 +2,10 @@
 <html>
   <head>
     <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' >
+
+    <title>Specificity Graph - Example</title>
+
     <style>
       * {
         padding: 0; margin: 0;
@@ -11,13 +15,25 @@
         font-size: 100%;
         font-family: 'Helvetica', sans-serif;
         padding-top: 2em;
+        padding-bottom: 1em;
       }
-      .main-header {
+      small {
+        font-size: 0.8em;
+      }
+      .abs-top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .center-wrapper {
         text-align: center;
-        margin-bottom: 1em;
       }
         .main-title {
           font-family: 'Gill sans', sans-serif;
+          margin-bottom: 4px;
+        }
+        .main-info {
+          color: #606060;
         }
         .main-header-link {
           text-decoration: none;
@@ -74,9 +90,9 @@
     </style>
   </head>
   <body>
-    <header class='main-header'>
+    <header class='main-header center-wrapper'>
       <h1 class='main-title'>CSS Specificity Graph</h1>
-      <small class="main-header-link"><a href='http://csswizardry.com/2014/10/the-specificity-graph/'/>Idea from Harry Roberts</a></small>
+      <p class="main-info">Spikes are bad, and the general trend should be towards higher specificity later in the stylesheet. <small><a class='main-header-link' href='http://csswizardry.com/2014/10/the-specificity-graph/'/>More info</a></small></p>
     </header>
 
     <svg class='vis js-graph' width='1000' height='400'>
