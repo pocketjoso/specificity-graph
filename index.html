@@ -1,0 +1,87 @@
+<!;DOCTYPE; html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <style>
+      * {
+        padding: 0; margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-size: 100%;
+        font-family: 'Helvetica', sans-serif;
+        padding-top: 2em;
+      }
+      .main-header {
+        text-align: center;
+        margin-bottom: 1em;
+      }
+        .main-title {
+          font-family: 'Gill sans', sans-serif;
+        }
+        .main-header-link {
+          text-decoration: none;
+          color: #999;
+        }
+
+        .vis {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2em;
+        font-family: sans-serif;
+        font-size: 0.9em;
+      }
+        .vis path {
+          fill: none;
+          stroke: steelblue;
+          stroke-width: 4px;
+        }
+
+        .vis .axis {
+          opacity: 0.6;
+        }
+          .vis .axis .tick {
+            display: none;
+          }
+
+        .vis .domain-label {
+          font-size: 0.9em;
+          fill: steelblue;
+        }
+
+
+        .vis .overlay {
+          fill: none;
+          pointer-events: all;
+        }
+        .vis .focus {
+          position: relative;
+        }
+          .vis .focus-text-background {
+            fill: #333;
+          }
+            .vis .focus-text {
+              font-size: 0.9em;
+              fill: #eee;
+            }
+
+          .vis .focus circle {
+            fill: none;
+            stroke-width: 2.5px;
+            stroke: #0c0;
+          }
+    </style>
+  </head>
+  <body>
+    <header class='main-header'>
+      <h1 class='main-title'>CSS Specificity Graph</h1>
+      <small class="main-header-link"><a href='http://csswizardry.com/2014/10/the-specificity-graph/'/>Idea from Harry Roberts</a></small>
+    </header>
+
+    <svg class='vis js-graph' width='1000' height='400'>
+    </svg>
+
+    <script src='dist/bundle.js'></script>
+  </body>
+</html>
