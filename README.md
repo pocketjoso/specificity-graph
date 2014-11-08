@@ -6,7 +6,7 @@ Idea by [Harry Roberts](http://csswizardry.com/2014/10/the-specificity-graph/)
 ![The generated graph](https://raw.githubusercontent.com/pocketjoso/specificity-graph/master/img/example-graph.png)
 Generate an interactive line graph showing the specificity in your stylesheet. Uses [d3](https://github.com/mbostock/d3), [css-parser](https://github.com/reworkcss/css-parse), and [specificity](https://github.com/keeganstreet/specificity).
 
-Online generator (coming soon)
+[Online Specificity Graph generator](http://jonassebastianohlsson.com/specificity-graph/)
 
 ## Installation
 `npm install specificity-graph`
