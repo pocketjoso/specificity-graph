@@ -1,7 +1,7 @@
 {
   "name": "specificity-graph",
   "description": "Generate an interactive Specificity Graph for your CSS.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/pocketjoso/specificity-graph",
   "author": {
     "name": "Jonas Ohlsson",
