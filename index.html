@@ -120,6 +120,23 @@
             stroke-width: 2.5px;
             stroke: #0c0;
           }
+
+        @media(min-width: 600px){
+          .mobile-focus-controls {
+            display: none;
+          }
+        }
+
+        button {
+          display: inline-block;
+          width: 50%;
+          text-align: center;
+          background: #e0e0e0;
+          border: 0;
+          border-right: 1px solid white;
+          padding: 1em 0;
+          margin-bottom: 1em;
+        }
     </style>
   </head>
   <body>
@@ -135,6 +152,9 @@
       </div>
     </div>
 
+    <div class='mobile-focus-controls'>
+      <button type="button" class="js-prev">Previous</button><button type="button" class="js-next">Next</button>
+    </div>
 
     <script src='dist/bundle.js'></script>
   </body>

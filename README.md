@@ -25,5 +25,6 @@ First require `./lib/core`.
 
 
 ## Changelog
+0.0.2 Prev/Next focus functions  
 0.0.1 Npm package  
 0.0.0 Initial version  
