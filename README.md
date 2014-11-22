@@ -16,6 +16,10 @@ To get the example `index.html` up and running:
 2. `npm install`  
 3. `npm run example`
 
+# Standalone Browser compatible Build (`specificity-graph-standalone.js`)
+
+You can find a browser compatible version of this library as `specificity-graph-standalone.js`.
+
 ## Usage
 First require `./lib/core`.
 
