@@ -1,2 +1,2 @@
-# Ignore node_modules which can be easily installed with `npm install`
 node_modules/
+dist/bundle.js
