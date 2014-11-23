@@ -16,13 +16,17 @@ To get the example `index.html` up and running:
 2. `npm install`  
 3. `npm run example`
 
-# Standalone Browser compatible Build (`specificity-graph-standalone.js`)
+### Standalone
+If you’re not using npm, you can simply download `specificity-graph-standalone.js`.
 
-You can find a browser compatible version of this library as `specificity-graph-standalone.js`.
 
 ## Usage
-First require `./lib/core`.
+`var specificityGraph = require('specificity-graph')`,  
+or if using standalone:  
+`<script src='specificity-graph-standalone.js'></script>`
 
+
+### Methods
 `specificityGraph.create(css, options)`
 
 `specificityGraph.update(css)`
