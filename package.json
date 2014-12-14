@@ -1,7 +1,7 @@
 {
   "name": "specificity-graph",
   "description": "Generate an interactive Specificity Graph for your CSS.",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "homepage": "https://github.com/pocketjoso/specificity-graph",
   "author": {
     "name": "Jonas Ohlsson",
@@ -16,7 +16,10 @@
     "url": "https://github.com/pocketjoso/specificity-graph/issues"
   },
   "license": "MIT",
-  "main": "./lib/core.js",
+  "main": "./bin/specificity-graph",
+  "bin": {
+    "specificity-graph": "./bin/specificity-graph"
+  },
   "keywords": [
     "CSS",
     "css",
@@ -24,11 +27,11 @@
     "graph"
   ],
   "dependencies": {
+    "cli-color": "^0.3.2",
+    "commander": "^2.5.0",
     "css-parse": "^2.0.0",
     "cssbeautify": "^0.3.1",
     "d3": "^3.4.13",
-    "glob": "^4.3.1",
-    "globby": "^1.0.0",
     "mkdirp": "^0.5.0",
     "specificity": "^0.1.4"
   },

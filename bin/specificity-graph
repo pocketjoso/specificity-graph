@@ -14,7 +14,7 @@ program
   .parse(process.argv);
 
 var input = program.args[0] ? path.resolve(program.args[0]) : null;
-var output = (program.args[1] || program.ouput) ? path.resolve(program.args[1] || program.output) : null;
+var output = (program.args[1] || program.ouput) ? path.resolve(program.args[1] || program.output) : './specificity-graph';
 
 function error(e) {
   console.log(colors.bold(colors.red('Specificity encounters an error')));
@@ -35,8 +35,8 @@ if(input) {
     var css = fs.readFileSync(input);
     var specificity = parser(css.toString());
 
-    generateChart(output || './specificity-graph',specificity, function (dest){
-      console.log(colors.blue('[specificity-css]') + ' Write specificity in ' + dest);
+    generateChart(output, specificity, function (dest){
+      console.log(colors.blue('[specificity-graph]') + ' Write specificity in ' + dest);
     });
 
   }catch(e) {
