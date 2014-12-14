@@ -11,24 +11,47 @@ Generate an interactive line graph showing the specificity in your stylesheet. U
 ## Installation
 `npm install specificity-graph`
 
-To get the example `index.html` up and running:  
-1. Clone repo  
-2. `npm install`  
+To get the example `index.html` up and running:
+
+1. Clone repo
+2. `npm install`
 3. `npm run example`
+
+## CLI
+
+It creates a directory with a graph for a CSS:
+
+Défault directory is **specificity-graph**.
+
+
+```shell
+.
+└── specificity-graph
+    ├── index.html // Graph
+    ├── specificity.json // Stats for your css
+    └── dist
+        └── bundle.js // JS for the graph
+```
+
+- `$ specificity-graph style.css`
+- `$ specificity-graph style.css my-output-directory`
+- `$ specificity-graph style.css -o my-output-directory2`
+- `$ cat style.css | specificity-graph > specificity.json`
 
 ### Standalone
 If you’re not using npm, you can simply download `specificity-graph-standalone.js`.
 
 
 ## Usage
-`var specificityGraph = require('specificity-graph')`,  
-or if using standalone:  
+`var specificityGraph = require('specificity-graph')`,
+or if using standalone:
 `<script src='specificity-graph-standalone.js'></script>`
 
 
 ### Methods
-`specificityGraph.create(css, options)`  
+`specificityGraph.create(css, options)`
 `specificityGraph.update(css)`
+`specificityGraph.draw(cssData, options)`
 
 #### Options
 `svgSelector` - Selector for `svg` element to draw specificity graph inside.

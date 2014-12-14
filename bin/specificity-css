@@ -2,8 +2,6 @@
 
 'use strict';
 
-console.log(__dirname)
-
 var fs            = require('fs'),
     path          = require('path'),
     colors        = require('cli-color'),
@@ -37,7 +35,7 @@ if(input) {
     var css = fs.readFileSync(input);
     var specificity = parser(css.toString());
 
-    generateChart(output || './specificity-graph-demo',specificity, function (dest){
+    generateChart(output || './specificity-graph',specificity, function (dest){
       console.log(colors.blue('[specificity-css]') + ' Write specificity in ' + dest);
     });
 
@@ -58,10 +56,8 @@ if(!input) {
 
   process.stdin.on('end', function() {
     try {
-      var specificity      = parser(buffer);
-      var statsSpecificity = stats(specificity);
-
-      console.log(JSON.stringify(statsSpecificity,null, 2));
+      var specificity = parser(buffer);
+      console.log(JSON.stringify(specificity,null, 2));
 
     }catch(e) {
       error(e);
