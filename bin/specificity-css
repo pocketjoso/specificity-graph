@@ -2,6 +2,7 @@
 
 'use strict';
 
+console.log(__dirname)
 
 var fs            = require('fs'),
     path          = require('path'),

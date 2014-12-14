@@ -15,25 +15,21 @@
   "bugs": {
     "url": "https://github.com/pocketjoso/specificity-graph/issues"
   },
-  "license": [
-    {
-      "type": "MIT",
-      "url": "github.com/pocketjoso/specificity-graph/blob/master/LICENSE-MIT"
-    }
-  ],
+  "license": "MIT",
   "main": "./lib/core.js",
-
   "keywords": [
     "CSS",
     "css",
     "specificity",
     "graph"
   ],
-  "license": "MIT",
   "dependencies": {
     "css-parse": "^2.0.0",
     "cssbeautify": "^0.3.1",
     "d3": "^3.4.13",
+    "glob": "^4.3.1",
+    "globby": "^1.0.0",
+    "mkdirp": "^0.5.0",
     "specificity": "^0.1.4"
   },
   "devDependencies": {
