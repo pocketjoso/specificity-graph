@@ -27,12 +27,24 @@ or if using standalone:
 
 
 ### Methods
-`specificityGraph.create(css, options)`
-
+`specificityGraph.create(css, options)`  
 `specificityGraph.update(css)`
+
+#### Options
+`svgSelector` - Selector for `svg` element to draw specificity graph inside.
+Defaults to `.js-graph`.  
+`width` - default `1000`. You should set a viewBox value on the SVG element
+to match `width` and `height`, f.e. `viewbox='0 0 1000 4000'`.  
+`height` - default `400`.  
+`showTicks` - (`true` | `false`). Show scale and ticks. Default `false`.  
+`xProp` - (`'selectorIndex'` | `'line'`). What to base the x dimension,
+ 'location in stylesheet' in graph on: index of selector in CSS, or line number
+ for selector in CSS. Default `'selectorIndex'`.  
+`yProp` - default `'specificity'`.
 
 
 ## Changelog
+0.0.3 showTicks option (thanks @MadLittleMods), options documentation.  
 0.0.2 Prev/Next focus functions  
 0.0.1 Npm package  
 0.0.0 Initial version  
