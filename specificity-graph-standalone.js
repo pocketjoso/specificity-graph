@@ -17,6 +17,7 @@ var _update = function(css, opts){
 module.exports = {
   create: _create,
   update: _update,
+  draw: lineChart.create,
   nextFocus: lineChart.nextFocus,
   prevFocus: lineChart.prevFocus
 };
@@ -68,7 +69,7 @@ var generateCssData = function(origCss) {
 
 module.exports = generateCssData;
 
-},{"css-parse":7,"cssbeautify":31,"specificity":33}],3:[function(_dereq_,module,exports){
+},{"css-parse":7,"cssbeautify":30,"specificity":32}],3:[function(_dereq_,module,exports){
 'use strict';
 
 var d3 = _dereq_('d3');
@@ -87,9 +88,9 @@ var _state = {
   width: 1000,
   height: 400,
   padding: {
-    top:    30,
+    top:    40,
     right:  60,
-    bottom: 30,
+    bottom: 40,
     left:   60
   },
 
@@ -123,7 +124,7 @@ var _updateFocus = function(index){
   var d = _state.data[_state.active_index];
   _state.focus.attr('transform', 'translate(' + _state.d3_x(d[_state.data_attribute_name_x]) + ',' + _state.d3_y(d[_state.data_attribute_name_y]) + ')');
   var t = _state.focus.select('.js-focus-text');
-  t.text(d.selectors);
+  t.text(d.selectors + ': ' + d.specificity);
 
   var w = t[0][0].getBBox().width + 20;
 
@@ -149,25 +150,31 @@ var _create =  function(data, opts){
 
   _update(_state.data);
 
-  //below elements don't change based on data
+  // below elements don't change based on data
 
   var xAxis = d3.svg.axis()
-        .scale(_state.d3_x)
-        .tickSize(0),
-      yAxis = d3.svg.axis()
-        .scale(_state.d3_y)
-        .tickSize(0)
-        .orient('left');
+    .scale(_state.d3_x)
+    .tickSize(0);
+  var yAxis = d3.svg.axis()
+    .scale(_state.d3_y)
+    .tickSize(0)
+    .orient('left');
 
   _state.vis.append('svg:g')
-    .attr('class', 'axis axis--x')
+    .attr('class', 'axis' + (opts.showTicks ? '--show-ticks' : ''))
     .attr('transform', 'translate(0,' + (_state.height - _state.padding.bottom) + ')')
-    .call(xAxis);
+    .call(xAxis)
+    // Move the ticks out from the axis line
+    .selectAll("text")
+      .attr("transform", 'translate(0,' + (opts.showTicks ? 4 : 0) + ')');
 
   _state.vis.append('svg:g')
-    .attr('class', 'axis axis--y')
+    .attr('class', 'axis' + (opts.showTicks ? '--show-ticks' : ''))
     .attr('transform', 'translate(' + (_state.padding.left) + ',0)')
-    .call(yAxis);
+    .call(yAxis)
+    // Move the ticks out from the axis line
+    .selectAll("text")
+      .attr("transform", 'translate(' + (opts.showTicks ? -4 : 0) + ', 0)');
 
   // x domain label
   _state.vis.append('svg:text')
@@ -175,20 +182,20 @@ var _create =  function(data, opts){
     .attr('text-anchor', 'middle')
     .attr('x', (_state.width/2))
     .attr('y', _state.height)
-    .attr('transform', 'translate(0,' + (-_state.padding.bottom+24) + ')')
+    .attr('transform', 'translate(0,' + (-_state.padding.bottom+(opts.showTicks ? 34 : 24)) + ')')
     .text('Location in stylesheet');
 
   // y domain label
   _state.vis.append('svg:text')
     .attr('class', 'domain-label')
     .attr('text-anchor', 'middle')
-    .attr('transform', 'translate('+(_state.padding.left-16) + ','+(_state.height/2)+')rotate(-90)')
+    .attr('transform', 'translate('+(_state.padding.left-(opts.showTicks ? 34 : 16)) + ','+(_state.height/2)+')rotate(-90)')
     .text('Specificity');
 
   // handle on mouseover focus circle and info text
   _state.focus = _state.vis.append('svg:g')
-  .attr('class', 'focus')
-  .style('display', 'none')
+    .attr('class', 'focus')
+    .style('display', 'none');
 
   _state.focus.append('svg:circle')
     .attr('r', 4.5);
@@ -291,7 +298,7 @@ module.exports = {
   prevFocus: _prevFocus
 };
 
-},{"d3":32}],4:[function(_dereq_,module,exports){
+},{"d3":31}],4:[function(_dereq_,module,exports){
 
 },{}],5:[function(_dereq_,module,exports){
 (function (process){
@@ -1900,7 +1907,7 @@ exports.comment = function(node) {
     return this._comment(node);
 };
 
-},{"fs":4,"path":5,"source-map":19,"source-map-resolve":18,"urix":30}],15:[function(_dereq_,module,exports){
+},{"fs":4,"path":5,"source-map":19,"source-map-resolve":18,"urix":29}],15:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2268,7 +2275,7 @@ exports.SourceMapGenerator = _dereq_('./source-map/source-map-generator').Source
 exports.SourceMapConsumer = _dereq_('./source-map/source-map-consumer').SourceMapConsumer;
 exports.SourceNode = _dereq_('./source-map/source-node').SourceNode;
 
-},{"./source-map/source-map-consumer":25,"./source-map/source-map-generator":26,"./source-map/source-node":27}],20:[function(_dereq_,module,exports){
+},{"./source-map/source-map-consumer":24,"./source-map/source-map-generator":25,"./source-map/source-node":26}],20:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -2367,7 +2374,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"./util":28,"amdefine":29}],21:[function(_dereq_,module,exports){
+},{"./util":27,"amdefine":28}],21:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -2436,7 +2443,7 @@ _defi_(function (_dereq_, exports, module) {
 
   /**
    * Converts from a two-complement value to a value where the sign bit is
-   * placed in the least significant bit.  For example, as decimals:
+   * is placed in the least significant bit.  For example, as decimals:
    *   1 becomes 2 (10 binary), -1 becomes 3 (11 binary)
    *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
    */
@@ -2448,7 +2455,7 @@ _defi_(function (_dereq_, exports, module) {
 
   /**
    * Converts to a two-complement value from a value where the sign bit is
-   * placed in the least significant bit.  For example, as decimals:
+   * is placed in the least significant bit.  For example, as decimals:
    *   2 (10 binary) becomes 1, 3 (11 binary) becomes -1
    *   4 (100 binary) becomes 2, 5 (101 binary) becomes -2
    */
@@ -2511,7 +2518,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"./base64":22,"amdefine":29}],22:[function(_dereq_,module,exports){
+},{"./base64":22,"amdefine":28}],22:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -2555,7 +2562,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"amdefine":29}],23:[function(_dereq_,module,exports){
+},{"amdefine":28}],23:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -2581,17 +2588,17 @@ _defi_(function (_dereq_, exports, module) {
     //
     //   1. We find the exact element we are looking for.
     //
-    //   2. We did not find the exact element, but we can return the index of
-    //      the next closest element that is less than that element.
+    //   2. We did not find the exact element, but we can return the next
+    //      closest element that is less than that element.
     //
     //   3. We did not find the exact element, and there is no next-closest
     //      element which is less than the one we are searching for, so we
-    //      return -1.
+    //      return null.
     var mid = Math.floor((aHigh - aLow) / 2) + aLow;
     var cmp = aCompare(aNeedle, aHaystack[mid], true);
     if (cmp === 0) {
       // Found the element we are looking for.
-      return mid;
+      return aHaystack[mid];
     }
     else if (cmp > 0) {
       // aHaystack[mid] is greater than our needle.
@@ -2601,7 +2608,7 @@ _defi_(function (_dereq_, exports, module) {
       }
       // We did not find an exact match, return the next closest one
       // (termination case 2).
-      return mid;
+      return aHaystack[mid];
     }
     else {
       // aHaystack[mid] is less than our needle.
@@ -2611,16 +2618,18 @@ _defi_(function (_dereq_, exports, module) {
       }
       // The exact needle element was not found in this haystack. Determine if
       // we are in termination case (2) or (3) and return the appropriate thing.
-      return aLow < 0 ? -1 : aLow;
+      return aLow < 0
+        ? null
+        : aHaystack[aLow];
     }
   }
 
   /**
    * This is an implementation of binary search which will always try and return
-   * the index of next lowest value checked if there is no exact hit. This is
-   * because mappings between original and generated line/col pairs are single
-   * points, and there is an implicit region between each of them, so a miss
-   * just means that you aren't on the very start of a region.
+   * the next lowest value checked if there is no exact hit. This is because
+   * mappings between original and generated line/col pairs are single points,
+   * and there is an implicit region between each of them, so a miss just means
+   * that you aren't on the very start of a region.
    *
    * @param aNeedle The element you are looking for.
    * @param aHaystack The array that is being searched.
@@ -2629,103 +2638,14 @@ _defi_(function (_dereq_, exports, module) {
    *     than, equal to, or greater than the element, respectively.
    */
   exports.search = function search(aNeedle, aHaystack, aCompare) {
-    if (aHaystack.length === 0) {
-      return -1;
-    }
-    return recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack, aCompare)
+    return aHaystack.length > 0
+      ? recursiveSearch(-1, aHaystack.length, aNeedle, aHaystack, aCompare)
+      : null;
   };
 
 });
 
-},{"amdefine":29}],24:[function(_dereq_,module,exports){
-/* -*- Mode: js; js-indent-level: 2; -*- */
-/*
- * Copyright 2014 Mozilla Foundation and contributors
- * Licensed under the New BSD license. See LICENSE or:
- * http://opensource.org/licenses/BSD-3-Clause
- */
-if (typeof _defi_ !== 'function') {
-    var _defi_ = _dereq_('amdefine')(module, _dereq_);
-}
-_defi_(function (_dereq_, exports, module) {
-
-  var util = _dereq_('./util');
-
-  /**
-   * Determine whether mappingB is after mappingA with respect to generated
-   * position.
-   */
-  function generatedPositionAfter(mappingA, mappingB) {
-    // Optimized for most common case
-    var lineA = mappingA.generatedLine;
-    var lineB = mappingB.generatedLine;
-    var columnA = mappingA.generatedColumn;
-    var columnB = mappingB.generatedColumn;
-    return lineB > lineA || lineB == lineA && columnB >= columnA ||
-           util.compareByGeneratedPositions(mappingA, mappingB) <= 0;
-  }
-
-  /**
-   * A data structure to provide a sorted view of accumulated mappings in a
-   * performance conscious manner. It trades a neglibable overhead in general
-   * case for a large speedup in case of mappings being added in order.
-   */
-  function MappingList() {
-    this._array = [];
-    this._sorted = true;
-    // Serves as infimum
-    this._last = {generatedLine: -1, generatedColumn: 0};
-  }
-
-  /**
-   * Iterate through internal items. This method takes the same arguments that
-   * `Array.prototype.forEach` takes.
-   *
-   * NOTE: The order of the mappings is NOT guaranteed.
-   */
-  MappingList.prototype.unsortedForEach =
-    function MappingList_forEach(aCallback, aThisArg) {
-      this._array.forEach(aCallback, aThisArg);
-    };
-
-  /**
-   * Add the given source mapping.
-   *
-   * @param Object aMapping
-   */
-  MappingList.prototype.add = function MappingList_add(aMapping) {
-    var mapping;
-    if (generatedPositionAfter(this._last, aMapping)) {
-      this._last = aMapping;
-      this._array.push(aMapping);
-    } else {
-      this._sorted = false;
-      this._array.push(aMapping);
-    }
-  };
-
-  /**
-   * Returns the flat, sorted array of mappings. The mappings are sorted by
-   * generated position.
-   *
-   * WARNING: This method returns internal data without copying, for
-   * performance. The return value must NOT be mutated, and should be treated as
-   * an immutable borrow. If you want to take ownership, you must make your own
-   * copy.
-   */
-  MappingList.prototype.toArray = function MappingList_toArray() {
-    if (!this._sorted) {
-      this._array.sort(util.compareByGeneratedPositions);
-      this._sorted = true;
-    }
-    return this._array;
-  };
-
-  exports.MappingList = MappingList;
-
-});
-
-},{"./util":28,"amdefine":29}],25:[function(_dereq_,module,exports){
+},{"amdefine":28}],24:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -2794,11 +2714,6 @@ _defi_(function (_dereq_, exports, module) {
       throw new Error('Unsupported version: ' + version);
     }
 
-    // Some source maps produce relative source paths like "./foo.js" instead of
-    // "foo.js".  Normalize these first so that future comparisons will succeed.
-    // See bugzil.la/1090768.
-    sources = sources.map(util.normalize);
-
     // Pass `true` below to allow duplicate names and sources. While source maps
     // are intended to be compressed and deduplicated, the TypeScript compiler
     // sometimes generates source maps with duplicates in them. See Github issue
@@ -2830,8 +2745,9 @@ _defi_(function (_dereq_, exports, module) {
                                                               smc.sourceRoot);
       smc.file = aSourceMap._file;
 
-      smc.__generatedMappings = aSourceMap._mappings.toArray().slice();
-      smc.__originalMappings = aSourceMap._mappings.toArray().slice()
+      smc.__generatedMappings = aSourceMap._mappings.slice()
+        .sort(util.compareByGeneratedPositions);
+      smc.__originalMappings = aSourceMap._mappings.slice()
         .sort(util.compareByOriginalPositions);
 
       return smc;
@@ -3023,33 +2939,6 @@ _defi_(function (_dereq_, exports, module) {
     };
 
   /**
-   * Compute the last column for each generated mapping. The last column is
-   * inclusive.
-   */
-  SourceMapConsumer.prototype.computeColumnSpans =
-    function SourceMapConsumer_computeColumnSpans() {
-      for (var index = 0; index < this._generatedMappings.length; ++index) {
-        var mapping = this._generatedMappings[index];
-
-        // Mappings do not contain a field for the last generated columnt. We
-        // can come up with an optimistic estimate, however, by assuming that
-        // mappings are contiguous (i.e. given two consecutive mappings, the
-        // first mapping ends where the second one starts).
-        if (index + 1 < this._generatedMappings.length) {
-          var nextMapping = this._generatedMappings[index + 1];
-
-          if (mapping.generatedLine === nextMapping.generatedLine) {
-            mapping.lastGeneratedColumn = nextMapping.generatedColumn - 1;
-            continue;
-          }
-        }
-
-        // The last mapping for each line spans the entire line.
-        mapping.lastGeneratedColumn = Infinity;
-      }
-    };
-
-  /**
    * Returns the original source, line, and column information for the generated
    * source's line and column positions provided. The only argument is an object
    * with the following properties:
@@ -3071,27 +2960,23 @@ _defi_(function (_dereq_, exports, module) {
         generatedColumn: util.getArg(aArgs, 'column')
       };
 
-      var index = this._findMapping(needle,
-                                    this._generatedMappings,
-                                    "generatedLine",
-                                    "generatedColumn",
-                                    util.compareByGeneratedPositions);
+      var mapping = this._findMapping(needle,
+                                      this._generatedMappings,
+                                      "generatedLine",
+                                      "generatedColumn",
+                                      util.compareByGeneratedPositions);
 
-      if (index >= 0) {
-        var mapping = this._generatedMappings[index];
-
-        if (mapping.generatedLine === needle.generatedLine) {
-          var source = util.getArg(mapping, 'source', null);
-          if (source != null && this.sourceRoot != null) {
-            source = util.join(this.sourceRoot, source);
-          }
-          return {
-            source: source,
-            line: util.getArg(mapping, 'originalLine', null),
-            column: util.getArg(mapping, 'originalColumn', null),
-            name: util.getArg(mapping, 'name', null)
-          };
+      if (mapping && mapping.generatedLine === needle.generatedLine) {
+        var source = util.getArg(mapping, 'source', null);
+        if (source != null && this.sourceRoot != null) {
+          source = util.join(this.sourceRoot, source);
         }
+        return {
+          source: source,
+          line: util.getArg(mapping, 'originalLine', null),
+          column: util.getArg(mapping, 'originalColumn', null),
+          name: util.getArg(mapping, 'name', null)
+        };
       }
 
       return {
@@ -3169,80 +3054,23 @@ _defi_(function (_dereq_, exports, module) {
         needle.source = util.relative(this.sourceRoot, needle.source);
       }
 
-      var index = this._findMapping(needle,
-                                    this._originalMappings,
-                                    "originalLine",
-                                    "originalColumn",
-                                    util.compareByOriginalPositions);
+      var mapping = this._findMapping(needle,
+                                      this._originalMappings,
+                                      "originalLine",
+                                      "originalColumn",
+                                      util.compareByOriginalPositions);
 
-      if (index >= 0) {
-        var mapping = this._originalMappings[index];
-
+      if (mapping) {
         return {
           line: util.getArg(mapping, 'generatedLine', null),
-          column: util.getArg(mapping, 'generatedColumn', null),
-          lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
+          column: util.getArg(mapping, 'generatedColumn', null)
         };
       }
 
       return {
         line: null,
-        column: null,
-        lastColumn: null
+        column: null
       };
-    };
-
-  /**
-   * Returns all generated line and column information for the original source
-   * and line provided. The only argument is an object with the following
-   * properties:
-   *
-   *   - source: The filename of the original source.
-   *   - line: The line number in the original source.
-   *
-   * and an array of objects is returned, each with the following properties:
-   *
-   *   - line: The line number in the generated source, or null.
-   *   - column: The column number in the generated source, or null.
-   */
-  SourceMapConsumer.prototype.allGeneratedPositionsFor =
-    function SourceMapConsumer_allGeneratedPositionsFor(aArgs) {
-      // When there is no exact match, SourceMapConsumer.prototype._findMapping
-      // returns the index of the closest mapping less than the needle. By
-      // setting needle.originalColumn to Infinity, we thus find the last
-      // mapping for the given line, provided such a mapping exists.
-      var needle = {
-        source: util.getArg(aArgs, 'source'),
-        originalLine: util.getArg(aArgs, 'line'),
-        originalColumn: Infinity
-      };
-
-      if (this.sourceRoot != null) {
-        needle.source = util.relative(this.sourceRoot, needle.source);
-      }
-
-      var mappings = [];
-
-      var index = this._findMapping(needle,
-                                    this._originalMappings,
-                                    "originalLine",
-                                    "originalColumn",
-                                    util.compareByOriginalPositions);
-      if (index >= 0) {
-        var mapping = this._originalMappings[index];
-
-        while (mapping && mapping.originalLine === needle.originalLine) {
-          mappings.push({
-            line: util.getArg(mapping, 'generatedLine', null),
-            column: util.getArg(mapping, 'generatedColumn', null),
-            lastColumn: util.getArg(mapping, 'lastGeneratedColumn', null)
-          });
-
-          mapping = this._originalMappings[--index];
-        }
-      }
-
-      return mappings.reverse();
     };
 
   SourceMapConsumer.GENERATED_ORDER = 1;
@@ -3302,7 +3130,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"./array-set":20,"./base64-vlq":21,"./binary-search":23,"./util":28,"amdefine":29}],26:[function(_dereq_,module,exports){
+},{"./array-set":20,"./base64-vlq":21,"./binary-search":23,"./util":27,"amdefine":28}],25:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -3317,7 +3145,6 @@ _defi_(function (_dereq_, exports, module) {
   var base64VLQ = _dereq_('./base64-vlq');
   var util = _dereq_('./util');
   var ArraySet = _dereq_('./array-set').ArraySet;
-  var MappingList = _dereq_('./mapping-list').MappingList;
 
   /**
    * An instance of the SourceMapGenerator represents a source map which is
@@ -3333,10 +3160,9 @@ _defi_(function (_dereq_, exports, module) {
     }
     this._file = util.getArg(aArgs, 'file', null);
     this._sourceRoot = util.getArg(aArgs, 'sourceRoot', null);
-    this._skipValidation = util.getArg(aArgs, 'skipValidation', false);
     this._sources = new ArraySet();
     this._names = new ArraySet();
-    this._mappings = new MappingList();
+    this._mappings = [];
     this._sourcesContents = null;
   }
 
@@ -3406,9 +3232,7 @@ _defi_(function (_dereq_, exports, module) {
       var source = util.getArg(aArgs, 'source', null);
       var name = util.getArg(aArgs, 'name', null);
 
-      if (!this._skipValidation) {
-        this._validateMapping(generated, original, source, name);
-      }
+      this._validateMapping(generated, original, source, name);
 
       if (source != null && !this._sources.has(source)) {
         this._sources.add(source);
@@ -3418,7 +3242,7 @@ _defi_(function (_dereq_, exports, module) {
         this._names.add(name);
       }
 
-      this._mappings.add({
+      this._mappings.push({
         generatedLine: generated.line,
         generatedColumn: generated.column,
         originalLine: original != null && original.line,
@@ -3495,7 +3319,7 @@ _defi_(function (_dereq_, exports, module) {
       var newNames = new ArraySet();
 
       // Find mappings for the "sourceFile"
-      this._mappings.unsortedForEach(function (mapping) {
+      this._mappings.forEach(function (mapping) {
         if (mapping.source === sourceFile && mapping.originalLine != null) {
           // Check if it can be mapped by the source map, then update the mapping.
           var original = aSourceMapConsumer.originalPositionFor({
@@ -3601,10 +3425,15 @@ _defi_(function (_dereq_, exports, module) {
       var result = '';
       var mapping;
 
-      var mappings = this._mappings.toArray();
+      // The mappings must be guaranteed to be in sorted order before we start
+      // serializing them or else the generated line numbers (which are defined
+      // via the ';' separators) will be all messed up. Note: it might be more
+      // performant to maintain the sorting as we insert them, rather than as we
+      // serialize them, but the big O is the same either way.
+      this._mappings.sort(util.compareByGeneratedPositions);
 
-      for (var i = 0, len = mappings.length; i < len; i++) {
-        mapping = mappings[i];
+      for (var i = 0, len = this._mappings.length; i < len; i++) {
+        mapping = this._mappings[i];
 
         if (mapping.generatedLine !== previousGeneratedLine) {
           previousGeneratedColumn = 0;
@@ -3615,7 +3444,7 @@ _defi_(function (_dereq_, exports, module) {
         }
         else {
           if (i > 0) {
-            if (!util.compareByGeneratedPositions(mapping, mappings[i - 1])) {
+            if (!util.compareByGeneratedPositions(mapping, this._mappings[i - 1])) {
               continue;
             }
             result += ',';
@@ -3704,7 +3533,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"./array-set":20,"./base64-vlq":21,"./mapping-list":24,"./util":28,"amdefine":29}],27:[function(_dereq_,module,exports){
+},{"./array-set":20,"./base64-vlq":21,"./util":27,"amdefine":28}],26:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -3723,13 +3552,8 @@ _defi_(function (_dereq_, exports, module) {
   // operating systems these days (capturing the result).
   var REGEX_NEWLINE = /(\r?\n)/;
 
-  // Newline character code for charCodeAt() comparisons
-  var NEWLINE_CODE = 10;
-
-  // Private symbol for identifying `SourceNode`s when multiple versions of
-  // the source-map library are loaded. This MUST NOT CHANGE across
-  // versions!
-  var isSourceNode = "$$$isSourceNode$$$";
+  // Matches a Windows-style newline, or any character.
+  var REGEX_CHARACTER = /\r\n|[\s\S]/g;
 
   /**
    * SourceNodes provide a way to abstract over interpolating/concatenating
@@ -3750,7 +3574,6 @@ _defi_(function (_dereq_, exports, module) {
     this.column = aColumn == null ? null : aColumn;
     this.source = aSource == null ? null : aSource;
     this.name = aName == null ? null : aName;
-    this[isSourceNode] = true;
     if (aChunks != null) this.add(aChunks);
   }
 
@@ -3881,7 +3704,7 @@ _defi_(function (_dereq_, exports, module) {
         this.add(chunk);
       }, this);
     }
-    else if (aChunk[isSourceNode] || typeof aChunk === "string") {
+    else if (aChunk instanceof SourceNode || typeof aChunk === "string") {
       if (aChunk) {
         this.children.push(aChunk);
       }
@@ -3906,7 +3729,7 @@ _defi_(function (_dereq_, exports, module) {
         this.prepend(aChunk[i]);
       }
     }
-    else if (aChunk[isSourceNode] || typeof aChunk === "string") {
+    else if (aChunk instanceof SourceNode || typeof aChunk === "string") {
       this.children.unshift(aChunk);
     }
     else {
@@ -3928,7 +3751,7 @@ _defi_(function (_dereq_, exports, module) {
     var chunk;
     for (var i = 0, len = this.children.length; i < len; i++) {
       chunk = this.children[i];
-      if (chunk[isSourceNode]) {
+      if (chunk instanceof SourceNode) {
         chunk.walk(aFn);
       }
       else {
@@ -3973,7 +3796,7 @@ _defi_(function (_dereq_, exports, module) {
    */
   SourceNode.prototype.replaceRight = function SourceNode_replaceRight(aPattern, aReplacement) {
     var lastChild = this.children[this.children.length - 1];
-    if (lastChild[isSourceNode]) {
+    if (lastChild instanceof SourceNode) {
       lastChild.replaceRight(aPattern, aReplacement);
     }
     else if (typeof lastChild === 'string') {
@@ -4006,7 +3829,7 @@ _defi_(function (_dereq_, exports, module) {
   SourceNode.prototype.walkSourceContents =
     function SourceNode_walkSourceContents(aFn) {
       for (var i = 0, len = this.children.length; i < len; i++) {
-        if (this.children[i][isSourceNode]) {
+        if (this.children[i] instanceof SourceNode) {
           this.children[i].walkSourceContents(aFn);
         }
       }
@@ -4082,12 +3905,12 @@ _defi_(function (_dereq_, exports, module) {
         lastOriginalSource = null;
         sourceMappingActive = false;
       }
-      for (var idx = 0, length = chunk.length; idx < length; idx++) {
-        if (chunk.charCodeAt(idx) === NEWLINE_CODE) {
+      chunk.match(REGEX_CHARACTER).forEach(function (ch, idx, array) {
+        if (REGEX_NEWLINE.test(ch)) {
           generated.line++;
           generated.column = 0;
           // Mappings end at eol
-          if (idx + 1 === length) {
+          if (idx + 1 === array.length) {
             lastOriginalSource = null;
             sourceMappingActive = false;
           } else if (sourceMappingActive) {
@@ -4105,9 +3928,9 @@ _defi_(function (_dereq_, exports, module) {
             });
           }
         } else {
-          generated.column++;
+          generated.column += ch.length;
         }
-      }
+      });
     });
     this.walkSourceContents(function (sourceFile, sourceContent) {
       map.setSourceContent(sourceFile, sourceContent);
@@ -4120,7 +3943,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"./source-map-generator":26,"./util":28,"amdefine":29}],28:[function(_dereq_,module,exports){
+},{"./source-map-generator":25,"./util":27,"amdefine":28}],27:[function(_dereq_,module,exports){
 /* -*- Mode: js; js-indent-level: 2; -*- */
 /*
  * Copyright 2011 Mozilla Foundation and contributors
@@ -4441,7 +4264,7 @@ _defi_(function (_dereq_, exports, module) {
 
 });
 
-},{"amdefine":29}],29:[function(_dereq_,module,exports){
+},{"amdefine":28}],28:[function(_dereq_,module,exports){
 (function (process,__filename){
 /** vim: et:ts=4:sw=4:sts=4
  * @license amdefine 0.1.0 Copyright (c) 2011, The Dojo Foundation All Rights Reserved.
@@ -4743,8 +4566,8 @@ function amdefine(module, requireFn) {
 
 module.exports = amdefine;
 
-}).call(this,_dereq_('_process'),"/node_modules\\css-parse\\node_modules\\css\\node_modules\\source-map\\node_modules\\amdefine\\amdefine.js")
-},{"_process":6,"path":5}],30:[function(_dereq_,module,exports){
+}).call(this,_dereq_('_process'),"/node_modules/css-parse/node_modules/css/node_modules/source-map/node_modules/amdefine/amdefine.js")
+},{"_process":6,"path":5}],29:[function(_dereq_,module,exports){
 // Copyright 2014 Simon Lydell
 // X11 (“MIT”) Licensed. (See LICENSE.)
 
@@ -4763,7 +4586,7 @@ function urix(aPath) {
 
 module.exports = urix
 
-},{"path":5}],31:[function(_dereq_,module,exports){
+},{"path":5}],30:[function(_dereq_,module,exports){
 /*
  Copyright (C) 2013 Sencha Inc.
  Copyright (C) 2012 Sencha Inc.
@@ -5234,10 +5057,10 @@ module.exports = urix
 
 }());
 
-},{}],32:[function(_dereq_,module,exports){
+},{}],31:[function(_dereq_,module,exports){
 !function() {
   var d3 = {
-    version: "3.5.3"
+    version: "3.5.2"
   };
   if (!Date.now) Date.now = function() {
     return +new Date();
@@ -13812,8 +13635,12 @@ module.exports = urix
     return function() {
       var lock, active;
       if ((lock = this[ns]) && (active = lock[lock.active])) {
-        if (--lock.count) delete lock[lock.active]; else delete this[ns];
-        lock.active += .5;
+        if (--lock.count) {
+          delete lock[lock.active];
+          lock.active += .5;
+        } else {
+          delete this[ns];
+        }
         active.event && active.event.interrupt.call(this, this.__data__, active.index);
       }
     };
@@ -14701,7 +14528,7 @@ module.exports = urix
   if (typeof _defi_ === "function" && _defi_.amd) _defi_(d3); else if (typeof module === "object" && module.exports) module.exports = d3;
   this.d3 = d3;
 }();
-},{}],33:[function(_dereq_,module,exports){
+},{}],32:[function(_dereq_,module,exports){
 /**
  * Calculates the specificity of CSS selectors
  * http://www.w3.org/TR/css3-selectors/#specificity
