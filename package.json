@@ -37,11 +37,12 @@
     "specificity": "^0.1.4"
   },
   "devDependencies": {
-    "browserify": "^6.2.0"
+    "browserify": "^6.2.0",
+    "derequire": "^1.2.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "example": "browserify example.js -o dist/bundle.js && open index.html",
-    "build_standalone": "browserify ./lib/core.js --standalone specificityGraph > specificity-graph-standalone.js"
+    "build_standalone": "browserify ./lib/core.js --standalone specificityGraph | derequire -f define -t _defi_ | derequire -f require -t _dereq_ > specificity-graph-standalone.js"
   }
 }
