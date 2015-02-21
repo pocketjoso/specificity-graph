@@ -42,7 +42,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "example": "browserify example.js -o dist/bundle.js && open index.html",
     "build_standalone": "browserify ./lib/core.js --standalone specificityGraph | derequire -f define -t _defi_ | derequire -f require -t _dereq_ > specificity-graph-standalone.js"
   }
 }
