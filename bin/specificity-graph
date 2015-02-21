@@ -14,7 +14,7 @@ program
   .parse(process.argv);
 
 var input = program.args[0] ? path.resolve(program.args[0]) : null;
-var output = (program.args[1] || program.ouput) ? path.resolve(program.args[1] || program.output) : './specificity-graph';
+var output = program.output ? path.resolve(program.output) : './specificity-graph';
 
 function error(e) {
   console.log(colors.bold(colors.red('Specificity encounters an error')));
