@@ -1,9 +1,8 @@
 'use strict'
 
-var specificityGraph = require('./lib/core');
-
-//we're using d3 and drawing an SVG inside the DOM, this requires a browser.
-if(typeof document === 'undefined') return;
+// if using standalone js, specifityGraph will be a global.
+// If going to be bundled via f.e. Browserify, just require
+var specificityGraph = specificityGraph || require('./lib/core');
 
 function defaultExample() {
   var css = "body { font-size: 100%; }"+
@@ -16,20 +15,15 @@ function defaultExample() {
   });
 }
 
-var httpRequest = new XMLHttpRequest()
-httpRequest.onreadystatechange = function (data) {
-
-  if(httpRequest.readyState == 4 && httpRequest.status == 200) {
-    var json = JSON.parse(httpRequest.responseText);
-    specificityGraph.draw(json,{
-      svgSelector: '.js-graph'
-    });
-  }else {
-    defaultExemple();
-  }
+// we inject a global embeddedJsonData var when running cli command,
+// if that's the case, display that data, otherwise default
+if(typeof embeddedJsonData === 'undefined'){
+  defaultExample();
+} else {
+  specificityGraph.draw(embeddedJsonData,{
+    svgSelector: '.js-graph'
+  });
 }
-httpRequest.open('GET', 'specificity.json');
-httpRequest.send();
 
 
 // bind some events for stepping the graph focus
