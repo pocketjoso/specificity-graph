@@ -11,6 +11,7 @@ var fs            = require('fs'),
     generateCustomSpecificityFiles = require('../lib/cli');
 
 commander
+  .usage('<cssFile>  [options]')
   .option('-o, --output [output]', 'Output destination')
   .option('-b --browser', 'Browser, open chart to view')
   .parse(process.argv);
