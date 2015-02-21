@@ -10,7 +10,7 @@ var fs            = require('fs'),
     generateChart = require('../lib/generateChart');
 
 program
-  .option('-o, --output', 'Ouput destination')
+  .option('-o, --output', 'Output destination')
   .parse(process.argv);
 
 var input = program.args[0] ? path.resolve(program.args[0]) : null;
@@ -30,7 +30,6 @@ if (input && !fs.existsSync(input)) {
 }
 
 if(input) {
-
   try {
     var css = fs.readFileSync(input);
     var specificity = parser(css.toString());
