@@ -6,8 +6,8 @@ var fs            = require('fs'),
     path          = require('path'),
     colors        = require('cli-color'),
     program       = require('commander'),
-    parser        = require('../lib/generateCssData'),
-    generateChart = require('../lib/generateChart');
+    generateCssData = require('../lib/generateCssData'),
+    generateCustomSpecificityFiles = require('../lib/cli');
 
 program
   .option('-o, --output', 'Output destination')
@@ -32,9 +32,9 @@ if (input && !fs.existsSync(input)) {
 if(input) {
   try {
     var css = fs.readFileSync(input);
-    var specificity = parser(css.toString());
+    var specificity = generateCssData(css.toString());
 
-    generateChart(output, specificity, function (dest){
+    generateCustomSpecificityFiles(output, specificity, function (dest){
       console.log(colors.blue('[specificity-graph]') + ' Write specificity in ' + dest);
     });
 
@@ -55,7 +55,7 @@ if(!input) {
 
   process.stdin.on('end', function() {
     try {
-      var specificity = parser(buffer);
+      var specificity = generateCssData(buffer);
       console.log(JSON.stringify(specificity,null, 2));
 
     }catch(e) {
