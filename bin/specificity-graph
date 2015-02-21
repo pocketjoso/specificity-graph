@@ -5,16 +5,19 @@
 var fs            = require('fs'),
     path          = require('path'),
     colors        = require('cli-color'),
-    program       = require('commander'),
+    commander       = require('commander'),
+    open          = require('opn'),
     generateCssData = require('../lib/generateCssData'),
     generateCustomSpecificityFiles = require('../lib/cli');
 
-program
-  .option('-o, --output', 'Output destination')
+commander
+  .option('-o, --output [output]', 'Output destination')
+  .option('-b --browser', 'Browser, open chart to view')
   .parse(process.argv);
 
-var input = program.args[0] ? path.resolve(program.args[0]) : null;
-var output = program.output ? path.resolve(program.output) : './specificity-graph';
+var input = commander.args[0] ? path.resolve(commander.args[0]) : null;
+var output = commander.output ? path.resolve(commander.output) : './specificity-graph';
+var openInBrowser = commander.browser ? true : false;
 
 function error(e) {
   console.log(colors.bold(colors.red('Specificity encounters an error')));
@@ -36,6 +39,9 @@ if(input) {
 
     generateCustomSpecificityFiles(output, specificity, function (dest){
       console.log(colors.blue('[specificity-graph]') + ' Write specificity in ' + dest);
+      if(openInBrowser){
+        open(path.join(dest, 'index.html'));
+      }
     });
 
   }catch(e) {
