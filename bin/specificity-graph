@@ -28,7 +28,12 @@ function error(e) {
   process.exit(2);
 }
 
-if (input && !fs.existsSync(input)) {
+if (!input){
+  console.error(colors.red('Missing arguments'));
+  console.log('usage: ' + '<cssFile>  [options]. See --help for more info');
+  process.exit(1);
+}
+if(input && !fs.existsSync(input)) {
   console.error(colors.red('Unable to read file'), input);
   process.exit(1);
 }
