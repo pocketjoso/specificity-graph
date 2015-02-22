@@ -1,0 +1,77 @@
+#!/usr/bin/env node
+
+'use strict';
+
+var fs            = require('fs'),
+    path          = require('path'),
+    colors        = require('cli-color'),
+    commander       = require('commander'),
+    open          = require('opn'),
+    generateCssData = require('../lib/generateCssData'),
+    generateCustomSpecificityFiles = require('../lib/cli');
+
+commander
+  .usage('<cssFile>  [options]')
+  .option('-o, --output [output]', 'Output destination')
+  .option('-b --browser', 'Browser, open chart to view')
+  .parse(process.argv);
+
+var input = commander.args[0] ? path.resolve(commander.args[0]) : null;
+var output = commander.output ? path.resolve(commander.output) : './specificity-graph';
+var openInBrowser = commander.browser ? true : false;
+
+function error(e) {
+  console.log(colors.bold(colors.red('Specificity encounters an error')));
+  console.log();
+  console.log(e)
+  e.stack && console.log(e.stack);
+  process.exit(2);
+}
+
+if (!input){
+  console.error(colors.red('Missing arguments'));
+  console.log('usage: ' + '<cssFile>  [options]. See --help for more info');
+  process.exit(1);
+}
+if(input && !fs.existsSync(input)) {
+  console.error(colors.red('Unable to read file'), input);
+  process.exit(1);
+}
+
+if(input) {
+  try {
+    var css = fs.readFileSync(input);
+    var specificity = generateCssData(css.toString());
+
+    generateCustomSpecificityFiles(output, specificity, function (dest){
+      console.log(colors.blue('[specificity-graph]') + ' Write specificity in ' + dest);
+      if(openInBrowser){
+        open(path.join(dest, 'index.html'));
+      }
+    });
+
+  }catch(e) {
+    error(e);
+  }
+}
+
+
+if(!input) {
+  process.stdin.resume();
+  process.stdin.setEncoding('utf8');
+
+  var buffer = '';
+  process.stdin.on('data', function(data) {
+      buffer += data;
+  });
+
+  process.stdin.on('end', function() {
+    try {
+      var specificity = generateCssData(buffer);
+      console.log(JSON.stringify(specificity,null, 2));
+
+    }catch(e) {
+      error(e);
+    }
+  });
+}

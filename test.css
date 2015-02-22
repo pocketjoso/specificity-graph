@@ -1,0 +1,176 @@
+* {
+        padding: 0; margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-size: 100%;
+        font-family: 'Helvetica', sans-serif;
+        padding-top: 2em;
+        padding-bottom: 1em;
+      }
+      a img {
+          border: 0;
+      }
+      small {
+        font-size: 0.8em;
+      }
+      .abs-top-right {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .center-wrapper {
+        text-align: center;
+      }
+      .main-header {
+        padding: 0 0.5em;
+      }
+        .main-title {
+          font-family: 'Gill sans', sans-serif;
+          margin-bottom: 4px;
+        }
+        .main-info {
+          color: #606060;
+        }
+        .main-header-link {
+          text-decoration: none;
+          color: #999;
+        }
+
+      .svg-container {
+        margin-bottom: 1em;
+      }
+      @media(min-width: 1000px){
+        .svg-container {
+          width: 1000px;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 2em;
+        }
+      }
+      .padding-height {
+        width: 100%;
+        height: 0;
+        padding-top: 40%;
+        position: relative;
+      }
+
+      .vis {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: block;
+        font-family: sans-serif;
+        font-size: 1.6em;
+      }
+      @media(min-width: 500px){
+        .vis {
+          font-size: 1.3em;
+        }
+      }
+      @media(min-width: 700px){
+        .vis {
+          font-size: 0.9em;
+        }
+      }
+        .vis path {
+          fill: none;
+          stroke: steelblue;
+          stroke-width: 4px;
+        }
+
+        .vis .axis {
+          opacity: 0.6;
+        }
+          .vis .axis .tick {
+            display: none;
+          }
+
+        .vis .domain-label {
+          font-size: 0.9em;
+          fill: steelblue;
+        }
+
+
+        .vis .overlay {
+          fill: none;
+          pointer-events: all;
+        }
+        .vis .focus {
+          position: relative;
+        }
+          .vis .focus-text-background {
+            fill: #333;
+          }
+            .vis .focus-text {
+              font-size: 0.9em;
+              fill: #eee;
+            }
+
+          .vis .focus circle {
+            fill: none;
+            stroke-width: 2.5px;
+            stroke: #0c0;
+          }
+
+      .css-input {
+        display: block;
+        width: 96%;
+        margin-left: 2%;
+        height: 10em;
+        margin-bottom: 2em;
+      }
+      @media(min-width: 1000px){
+        .css-input {
+          max-width: 1000px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+      }
+      @media(min-width: 600px){
+          .mobile-focus-controls {
+            display: none;
+          }
+        }
+
+        button {
+          display: inline-block;
+          width: 50%;
+          text-align: center;
+          background: #e0e0e0;
+          border: 0;
+          border-right: 1px solid white;
+          padding: 1em 0;
+          margin-bottom: 1em;
+        }
+      .twitter-btn {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 32px;
+        text-align: center;
+        margin-bottom: 3em;
+        opacity: 0.8;
+        transition: all 0.2s ease-out;
+      }
+        .twitter-btn:hover {
+          opacity: 1;
+        }
+      .main-footer, .main-footer-link {
+        color: #AAA;
+      }
+      .github-ribbon {
+        max-width: 80px;
+      }
+      @media(min-width: 40px){
+        .github-ribbon {
+          max-width: 100px;
+        }
+      }
+      @media(min-width: 800px){
+        .github-ribbon {
+          max-width: none;
+        }
+      }

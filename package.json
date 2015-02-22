@@ -1,7 +1,7 @@
 {
   "name": "specificity-graph",
   "description": "Generate an interactive Specificity Graph for your CSS.",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "homepage": "https://github.com/pocketjoso/specificity-graph",
   "author": {
     "name": "Jonas Ohlsson",
@@ -15,25 +15,25 @@
   "bugs": {
     "url": "https://github.com/pocketjoso/specificity-graph/issues"
   },
-  "license": [
-    {
-      "type": "MIT",
-      "url": "github.com/pocketjoso/specificity-graph/blob/master/LICENSE-MIT"
-    }
-  ],
-  "main": "./lib/core.js",
-
+  "license": "MIT",
+  "main": "./bin/specificity-graph",
+  "bin": {
+    "specificity-graph": "./bin/specificity-graph"
+  },
   "keywords": [
     "CSS",
     "css",
     "specificity",
     "graph"
   ],
-  "license": "MIT",
   "dependencies": {
+    "cli-color": "^0.3.2",
+    "commander": "^2.5.0",
     "css-parse": "^2.0.0",
     "cssbeautify": "^0.3.1",
     "d3": "^3.4.13",
+    "mkdirp": "^0.5.0",
+    "opn": "^1.0.1",
     "specificity": "^0.1.4"
   },
   "devDependencies": {
@@ -42,7 +42,6 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "example": "browserify example.js -o dist/bundle.js && open index.html",
     "build_standalone": "browserify ./lib/core.js --standalone specificityGraph | derequire -f define -t _defi_ | derequire -f require -t _dereq_ > specificity-graph-standalone.js"
   }
 }
