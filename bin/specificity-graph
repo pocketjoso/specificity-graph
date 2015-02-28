@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+/*
+ * Executable that will be available in the path by executing `npm install specificity-graph -g`.
+ * If installed as a dependency the binary will be placed in node_modules/.bin/specificity-graph
+ */
+
 'use strict';
 
 var fs            = require('fs'),
@@ -7,8 +12,7 @@ var fs            = require('fs'),
     colors        = require('cli-color'),
     commander       = require('commander'),
     open          = require('opn'),
-    generateCssData = require('../lib/generateCssData'),
-    generateCustomSpecificityFiles = require('../lib/cli');
+    specificityGraph = require('../lib/index');
 
 commander
   .usage('<cssFile>  [options]')
@@ -32,18 +36,19 @@ if (!input){
   console.error(colors.red('Missing arguments'));
   console.log('usage: ' + '<cssFile>  [options]. See --help for more info');
   process.exit(1);
-}
-if(input && !fs.existsSync(input)) {
-  console.error(colors.red('Unable to read file'), input);
-  process.exit(1);
-}
+} else {
+  if(!fs.existsSync(input)) {
+    console.error(colors.red('Unable to read file'), input);
+    process.exit(1);
+  }
 
-if(input) {
   try {
     var css = fs.readFileSync(input);
-    var specificity = generateCssData(css.toString());
 
-    generateCustomSpecificityFiles(output, specificity, function (dest){
+    specificityGraph(output, css, function (dest, err){
+      if(err) {
+        console.log(colors.yellow('[specificity-graph] The directory already exist'));
+      }
       console.log(colors.blue('[specificity-graph]') + ' Write specificity in ' + dest);
       if(openInBrowser){
         open(path.join(dest, 'index.html'));
@@ -53,25 +58,4 @@ if(input) {
   }catch(e) {
     error(e);
   }
-}
-
-
-if(!input) {
-  process.stdin.resume();
-  process.stdin.setEncoding('utf8');
-
-  var buffer = '';
-  process.stdin.on('data', function(data) {
-      buffer += data;
-  });
-
-  process.stdin.on('end', function() {
-    try {
-      var specificity = generateCssData(buffer);
-      console.log(JSON.stringify(specificity,null, 2));
-
-    }catch(e) {
-      error(e);
-    }
-  });
 }

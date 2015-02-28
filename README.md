@@ -12,6 +12,7 @@ Generate an interactive line graph showing the specificity in your stylesheet. U
 ## Usage
 `specifity-graph` can be used in different ways:
 * [CLI](#cli)
+* [Node module](#node-module)
 * [Via JavaScript](#via-javascript)
 * [Online](http://jonassebastianohlsson.com/specificity-graph/)
 
@@ -30,12 +31,20 @@ Creates a directory containing
 | -b --browser     | auto launch browser to view generated chart                 |
 | -h --help        | Help                                                        |
 
+### Node module
+```
+var specificityGraph = require('specificity-graph');
+
+specificityGraph(directory, css, function(directory){
+  console.log('specificity-graph files created in ' + directory);
+});
+```
 
 ### Via JavaScript
 First get the `specificityGraph` accessible in your code:
 
 #### Using Browserify (or similar)
-Just `require('specificity-graph')`
+Just `require('specificity-graph')`.
 
 #### Standalone (no module loader)
 Add `<script src="specificity-graph-standalone.js"></script>`,
