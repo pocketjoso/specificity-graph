@@ -1,5 +1,6 @@
 # Specificity Graph (for CSS)
 [![NPM version](https://badge.fury.io/js/specificity-graph.svg)](http://badge.fury.io/js/specificity-graph)
+[![Build Status](https://travis-ci.org/pocketjoso/specificity-graph.svg?branch=master)](https://travis-ci.org/pocketjoso/specificity-graph)
 
 Idea by [Harry Roberts](http://csswizardry.com/2014/10/the-specificity-graph/)
 
