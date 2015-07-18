@@ -1,0 +1,13 @@
+{
+    "eqeqeq"        : true,     // true: Require triple equals (===) for comparison
+    "newcap"        : false,    // true: Require capitalization of all constructor functions e.g. `new F()`
+    "undef"         : true,     // true: Require all non-global variables to be declared (prevents global leaks)
+    "strict"        : true,     // true: Requires all functions run in ES5 Strict Mode
+    // Environments
+    "browser"       : true,     // Web Browser (window, document, etc)
+    "browserify"    : true,    // Browserify (node.js code in the browser)
+    "devel"         : true,
+
+    // Custom Globals
+    "globals"       : {}        // additional predefined global variables
+}
