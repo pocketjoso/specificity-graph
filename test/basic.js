@@ -1,4 +1,5 @@
-var specificityGraph = require('../lib/index.js'),
+var specificityGraph = require('../lib/index'),
+generateCssData = require('../lib/generateCssData'),
 chai = require('chai'),
 expect = chai.expect,
 fs = require('fs'),
@@ -7,8 +8,16 @@ rimraf = require('rimraf');
 
 process.chdir('test');
 
-var css = 'body { color: red;} .div { color: red; } .div.div { color: red; } input[type=text] { color: red; }' +
-  '#kill-me { color: red; }';
+var cssSelectorArray = [
+  'body { color: red;}',
+  '.div { color: red; }',
+  '.div.div { color: red; }',
+  'input[type=text] { color: red; }',
+  '#kill-me { color: red; }',
+  '@media screen and (min-width: 600px) { .media-query-selector { color: red; }',
+  '.another-one-inside-mq { color: red; } }'
+];
+var css = cssSelectorArray.join(' ');
 
 after(function(done){
   console.log('clean up generated files..');
@@ -48,5 +57,9 @@ describe('node module tests', function() {
       specificityGraph(directory, css, function(dest, err){
         expect(dest).to.eql(directory);
       });
+    });
+
+    it('should generate one graph node per selector in css', function() {
+      expect(generateCssData(css).length).to.eql(cssSelectorArray.length);
     });
 });
