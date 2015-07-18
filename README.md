@@ -71,11 +71,3 @@ this will expose `specificityGraph` as a global variable.
 | showTicks            | `Boolean`. Show scale and ticks. Default `false`. |
 | xProp                | (possible values: `'selectorIndex'`, `'line'`). What to base the x dimension, 'location in stylesheet' in graph on: index of selector in CSS, or line number for selector in CSS. Default `'selectorIndex'`. |
 | yProp                | default `'specificity'` |
-
-
-## Changelog
-0.1.0 command line interface (thanks @dhoko)  
-0.0.3 showTicks option (thanks @MadLittleMods), options documentation.  
-0.0.2 Prev/Next focus functions  
-0.0.1 Npm package  
-0.0.0 Initial version  
